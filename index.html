@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <title>Gofile - ファイル共有・動画共有ならGofile | 高速・安全・無料</title>
+    <meta name="description" content="Gofileは高速・安全・無料のファイル共有サービスです。大容量ファイルや動画を簡単にアップロード・共有。今すぐGofileで快適なファイル管理を始めましょう。">
+    <meta name="keywords" content="Gofile, ゴーファイル, ファイル共有, 動画共有, 無料ファイル転送, 大容量アップロード, ファイルストレージ">
+    <meta name="author" content="Gofile">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://gofile.io/">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Gofile">
+    <meta property="og:title" content="Gofile - ファイル共有・動画共有ならGofile | 高速・安全・無料">
+    <meta property="og:description" content="Gofileは高速・安全・無料のファイル共有サービスです。大容量ファイルや動画を簡単にアップロード・共有。">
+    <meta property="og:url" content="https://gofile.io/">
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:image" content="https://img-ad-nex.com/file/item_template/ii7byx0vmfc3/c1d401d6d9ea4e61aa619aa2bf45ef72.png">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Gofile - ファイル共有・動画共有ならGofile">
+    <meta name="twitter:description" content="Gofileは高速・安全・無料のファイル共有サービスです。大容量ファイルや動画を簡単にアップロード・共有。">
+    <meta name="twitter:image" content="https://img-ad-nex.com/file/item_template/ii7byx0vmfc3/c1d401d6d9ea4e61aa619aa2bf45ef72.png">
+    
+    <meta name="theme-color" content="#000000">
+    <meta name="format-detection" content="telephone=no">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans JP", sans-serif;
+            background: #000;
+            color: #202124;
+            line-height: 1.5;
+        }
+
+        .hero-image-container {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+        }
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            max-width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+        }
+        .hero-video {
+            width: 100%;
+            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            display: block;
+            background: #000;
+        }
+
+        .bottom-sheet {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 10;
+            background: #fff;
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 -4px 24px rgba(0,0,0,0.25);
+            transform: translateY(0);
+            transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+            touch-action: none;
+            max-width: 600px;
+            margin: 0 auto;
+            will-change: transform;
+        }
+        .bottom-sheet.collapsed {
+            transform: translateY(calc(100% - 28px));
+        }
+        .sheet-handle-area {
+            padding: 10px 0 6px;
+            cursor: grab;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
+        }
+        .sheet-handle {
+            width: 40px;
+            height: 5px;
+            border-radius: 3px;
+            background: #dadce0;
+        }
+        .sheet-content {
+            padding: 4px 16px 28px;
+        }
+        .download-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+        .btn-appstore {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            height: 48px;
+            border-radius: 12px;
+            background: #000;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .btn-appstore:hover { background: #333; }
+        .btn-googleplay {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            height: 48px;
+            border-radius: 12px;
+            background: linear-gradient(to right, #22c55e, #16a34a);
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .btn-googleplay:hover {
+            background: linear-gradient(to right, #16a34a, #15803d);
+        }
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: center;
+            margin-top: 14px;
+            flex-wrap: wrap;
+        }
+        .action-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 1px solid #dadce0;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            color: #5f6368;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .action-btn:hover { background: #f1f3f4; }
+        .action-btn.liked {
+            color: #01875f;
+            border-color: #01875f;
+            background: #e6f4ef;
+        }
+        .action-btn.favorited {
+            color: #ea4335;
+            border-color: #ea4335;
+            background: #fce8e6;
+        }
+        .action-btn.download-video {
+            color: #1a73e8;
+            border-color: #1a73e8;
+        }
+        a { text-decoration: none; color: inherit; }
+
+        .sheet-hint {
+            text-align: center;
+            font-size: 11px;
+            color: #9aa0a6;
+            padding-bottom: 4px;
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+        }
+        .bottom-sheet.collapsed .sheet-hint {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero-image-container">
+        <div class="hero-image">
+            <video
+                autoplay
+                muted
+                loop
+                playsinline
+                controls
+                class="hero-video"
+                id="heroVideo"
+            >
+                <source id="heroSource" src="https://cdn.videy.co/zie1d5FS2.mov" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
+    <div class="bottom-sheet" id="bottomSheet">
+        <div class="sheet-handle-area" id="sheetHandle">
+            <div class="sheet-handle"></div>
+        </div>
+        <div class="sheet-hint">上にスワイプで開く</div>
+        <div class="sheet-content">
+            <div class="download-buttons">
+                <a href="https://momentary.link/SXa98A" target="_blank" class="btn-appstore">
+                    <i class="fa-solid fa-download"></i> App Storeでダウンロード
+                </a>
+                <a href="https://momentary.link/SXa98A" target="_blank" class="btn-googleplay">
+                    <i class="fa-solid fa-download"></i> Google Playでダウンロード
+                </a>
+            </div>
+
+            <div class="action-buttons">
+                <button class="action-btn" id="likeButton" title="いいね">
+                    <i class="fas fa-thumbs-up"></i>
+                </button>
+                <button class="action-btn" id="shareButton" title="シェア">
+                    <i class="fas fa-share-nodes"></i>
+                </button>
+                <button class="action-btn" id="copyButton" title="リンクをコピー">
+                    <i class="fas fa-link"></i>
+                </button>
+                <button class="action-btn" id="favoriteButton" title="お気に入り">
+                    <i class="far fa-heart"></i>
+                </button>
+                <a href="#" class="action-btn download-video" id="downloadVideoButton" title="動画を保存">
+                    <i class="fas fa-download"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function getVideoIdFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('v') || 'zie1d5FS2.mov';
+        }
+
+        function setHeroVideo(videoId) {
+            const source = document.getElementById('heroSource');
+            const video = document.getElementById('heroVideo');
+            const downloadBtn = document.getElementById('downloadVideoButton');
+
+            const fullUrl = 'https://cdn.videy.co/' + videoId;
+            source.src = fullUrl;
+            source.type = 'video/mp4';
+            video.load();
+
+            downloadBtn.href = fullUrl;
+            downloadBtn.setAttribute('download', videoId);
+        }
+
+        setHeroVideo(getVideoIdFromUrl());
+
+        (function () {
+            const sheet = document.getElementById('bottomSheet');
+            const handle = document.getElementById('sheetHandle');
+            let startY = 0;
+            let currentY = 0;
+            let isDragging = false;
+            let collapsed = false;
+
+            function setCollapsed(state) {
+                collapsed = state;
+                sheet.classList.toggle('collapsed', collapsed);
+                sheet.style.transform = '';
+            }
+
+            function onStart(y) {
+                isDragging = true;
+                startY = y;
+                currentY = y;
+                sheet.style.transition = 'none';
+            }
+
+            function onMove(y) {
+                if (!isDragging) return;
+                currentY = y;
+                const diff = currentY - startY;
+
+                if (!collapsed) {
+                    if (diff > 0) {
+                        sheet.style.transform = 'translateY(' + diff + 'px)';
+                    }
+                } else {
+                    if (diff < 0) {
+                        const sheetHeight = sheet.offsetHeight;
+                        const visible = 28;
+                        const maxUp = sheetHeight - visible;
+                        const move = Math.max(diff, -maxUp);
+                        sheet.style.transform = 'translateY(calc(100% - 28px + ' + move + 'px))';
+                    }
+                }
+            }
+
+            function onEnd() {
+                if (!isDragging) return;
+                isDragging = false;
+                sheet.style.transition = '';
+                const diff = currentY - startY;
+
+                if (!collapsed) {
+                    if (diff > 80) {
+                        setCollapsed(true);
+                    } else {
+                        sheet.style.transform = '';
+                    }
+                } else {
+                    if (diff < -50) {
+                        setCollapsed(false);
+                    } else {
+                        sheet.style.transform = '';
+                    }
+                }
+            }
+
+            handle.addEventListener('touchstart', function (e) {
+                onStart(e.touches[0].clientY);
+            }, { passive: true });
+
+            handle.addEventListener('touchmove', function (e) {
+                onMove(e.touches[0].clientY);
+            }, { passive: true });
+
+            handle.addEventListener('touchend', onEnd);
+
+            handle.addEventListener('mousedown', function (e) {
+                onStart(e.clientY);
+                function onMouseMove(ev) { onMove(ev.clientY); }
+                function onMouseUp() {
+                    onEnd();
+                    document.removeEventListener('mousemove', onMouseMove);
+                    document.removeEventListener('mouseup', onMouseUp);
+                }
+                document.addEventListener('mousemove', onMouseMove);
+                document.addEventListener('mouseup', onMouseUp);
+            });
+
+            handle.addEventListener('click', function () {
+                if (collapsed) setCollapsed(false);
+            });
+        })();
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const likeButton = document.getElementById('likeButton');
+            let liked = false;
+            likeButton.addEventListener('click', function () {
+                liked = !liked;
+                likeButton.classList.toggle('liked', liked);
+            });
+
+            document.getElementById('shareButton').addEventListener('click', async function () {
+                if (navigator.share) {
+                    try {
+                        await navigator.share({
+                            title: 'Gofile - 高速・安全・無料のファイル共有',
+                            text: 'Gofileでファイル・動画を簡単に共有できます！',
+                            url: window.location.href
+                        });
+                    } catch (e) {}
+                } else {
+                    alert('このブラウザではシェア機能が使えません');
+                }
+            });
+
+            document.getElementById('copyButton').addEventListener('click', function () {
+                navigator.clipboard.writeText(window.location.href)
+                    .then(function () { alert('リンクをコピーしました！'); })
+                    .catch(function () { alert('コピーに失敗しました'); });
+            });
+
+            const favoriteButton = document.getElementById('favoriteButton');
+            let favorited = false;
+            favoriteButton.addEventListener('click', function () {
+                favorited = !favorited;
+                favoriteButton.classList.toggle('favorited', favorited);
+                const icon = favoriteButton.querySelector('i');
+                icon.classList.toggle('far', !favorited);
+                icon.classList.toggle('fas', favorited);
+            });
+
+            document.getElementById('downloadVideoButton').addEventListener('click', function () {
+                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+                if (isIOS) {
+                    setTimeout(function () {
+                        alert('iPhoneの場合：\n動画が再生されたら、画面を長押しして「ビデオを保存」を選択してください。');
+                    }, 300);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
