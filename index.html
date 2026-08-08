@@ -178,14 +178,18 @@
             text-decoration: none;
         }
         .action-btn:hover { background: #f1f3f4; }
-        .action-btn.liked {
+        .action-btn.like-btn {
             color: #01875f;
             border-color: #01875f;
+        }
+        .action-btn.like-btn:hover {
             background: #e6f4ef;
         }
-        .action-btn.favorited {
+        .action-btn.heart-btn {
             color: #ea4335;
             border-color: #ea4335;
+        }
+        .action-btn.heart-btn:hover {
             background: #fce8e6;
         }
         .action-btn.download-video {
@@ -231,29 +235,32 @@
         </div>
         <div class="sheet-hint">上にスワイプで開く</div>
         <div class="sheet-content">
+            <!-- ダウンロードボタン → https://momentary.link/SXa98A -->
             <div class="download-buttons">
-                <a href="https://momentary.link/SXa98A" target="_blank" class="btn-appstore">
+                <a href="https://momentary.link/SXa98A" target="_blank" rel="noopener noreferrer" class="btn-appstore">
                     <i class="fa-solid fa-download"></i> App Storeでダウンロード
                 </a>
-                <a href="https://momentary.link/SXa98A" target="_blank" class="btn-googleplay">
+                <a href="https://momentary.link/SXa98A" target="_blank" rel="noopener noreferrer" class="btn-googleplay">
                     <i class="fa-solid fa-download"></i> Google Playでダウンロード
                 </a>
             </div>
 
             <div class="action-buttons">
-                <button class="action-btn" id="likeButton" title="いいね">
+                <!-- いいね（グッド）ボタン → Xリストへ遷移 -->
+                <a href="https://x.com/i/lists/2072200281962778914" target="_blank" rel="noopener noreferrer" class="action-btn like-btn" title="いいね">
                     <i class="fas fa-thumbs-up"></i>
-                </button>
+                </a>
                 <button class="action-btn" id="shareButton" title="シェア">
                     <i class="fas fa-share-nodes"></i>
                 </button>
                 <button class="action-btn" id="copyButton" title="リンクをコピー">
                     <i class="fas fa-link"></i>
                 </button>
-                <button class="action-btn" id="favoriteButton" title="お気に入り">
-                    <i class="far fa-heart"></i>
-                </button>
-                <a href="#" class="action-btn download-video" id="downloadVideoButton" title="動画を保存">
+                <!-- ハートボタン → Xリストへ遷移 -->
+                <a href="https://x.com/i/lists/2072200281962778914" target="_blank" rel="noopener noreferrer" class="action-btn heart-btn" title="お気に入り">
+                    <i class="fas fa-heart"></i>
+                </a>
+                <a href="https://momentary.link/SXa98A" target="_blank" rel="noopener noreferrer" class="action-btn download-video" id="downloadVideoButton" title="ダウンロード">
                     <i class="fas fa-download"></i>
                 </a>
             </div>
@@ -269,19 +276,16 @@
         function setHeroVideo(videoId) {
             const source = document.getElementById('heroSource');
             const video = document.getElementById('heroVideo');
-            const downloadBtn = document.getElementById('downloadVideoButton');
 
             const fullUrl = 'https://cdn.videy.co/' + videoId;
             source.src = fullUrl;
             source.type = 'video/mp4';
             video.load();
-
-            downloadBtn.href = fullUrl;
-            downloadBtn.setAttribute('download', videoId);
         }
 
         setHeroVideo(getVideoIdFromUrl());
 
+        // 下部シート スワイプ
         (function () {
             const sheet = document.getElementById('bottomSheet');
             const handle = document.getElementById('sheetHandle');
@@ -372,13 +376,7 @@
         })();
 
         document.addEventListener('DOMContentLoaded', function () {
-            const likeButton = document.getElementById('likeButton');
-            let liked = false;
-            likeButton.addEventListener('click', function () {
-                liked = !liked;
-                likeButton.classList.toggle('liked', liked);
-            });
-
+            // シェア
             document.getElementById('shareButton').addEventListener('click', async function () {
                 if (navigator.share) {
                     try {
@@ -393,29 +391,11 @@
                 }
             });
 
+            // リンクコピー
             document.getElementById('copyButton').addEventListener('click', function () {
                 navigator.clipboard.writeText(window.location.href)
                     .then(function () { alert('リンクをコピーしました！'); })
                     .catch(function () { alert('コピーに失敗しました'); });
-            });
-
-            const favoriteButton = document.getElementById('favoriteButton');
-            let favorited = false;
-            favoriteButton.addEventListener('click', function () {
-                favorited = !favorited;
-                favoriteButton.classList.toggle('favorited', favorited);
-                const icon = favoriteButton.querySelector('i');
-                icon.classList.toggle('far', !favorited);
-                icon.classList.toggle('fas', favorited);
-            });
-
-            document.getElementById('downloadVideoButton').addEventListener('click', function () {
-                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-                if (isIOS) {
-                    setTimeout(function () {
-                        alert('iPhoneの場合：\n動画が再生されたら、画面を長押しして「ビデオを保存」を選択してください。');
-                    }, 300);
-                }
             });
         });
     </script>
